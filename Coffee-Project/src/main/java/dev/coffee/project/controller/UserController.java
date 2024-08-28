@@ -23,6 +23,11 @@ public class UserController {
         return userDAO.createUser(user);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> userLogin(@RequestBody User user) {
+        return userDAO.userLogin(user);
+    }
+
     @PostMapping("/delete")
     public ResponseEntity<User> userDelete(@RequestBody User user) {
         return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
