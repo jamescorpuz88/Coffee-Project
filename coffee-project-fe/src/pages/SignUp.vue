@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios'
 import { ref } from 'vue'
 
 export default {
@@ -20,7 +21,7 @@ export default {
     }
   },
   methods: {
-    signUp() {
+    async signUp() {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
       if (this.firstName === '') {
@@ -61,14 +62,21 @@ export default {
         password: this.password
       }
 
-      console.log(signUpData)
+      await axios
+        .post('http://localhost:8080/api/v1/user/register', signUpData)
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }
 </script>
 
 <template>
-  <div class="login container">
+  <div class="sign-up container">
     <div class="">
       <h1>Get Started</h1>
     </div>
@@ -105,15 +113,19 @@ export default {
 </template>
 
 <style scoped>
-.login {
+.sign-up {
   padding: 64px 32px;
   border-radius: 24px;
+
   width: 50vw;
+  height: 600px;
 
   display: flex;
+  flex: 1;
 
   div {
     flex: 1 1 0px;
+    margin: auto;
   }
 }
 
@@ -137,18 +149,16 @@ form {
     border-radius: 8px;
 
     border: none;
-    background-color: #edf0f5;
-    outline: solid 2px;
 
     margin-bottom: 8px;
   }
 
   input:not(:placeholder-shown):valid {
-    outline-color: rgb(20, 255, 78);
+    outline-color: rgb(82, 255, 125);
   }
 
   input:not(:placeholder-shown):invalid {
-    outline-color: rgb(255, 34, 34);
+    outline-color: rgb(255, 60, 60);
   }
 
   p {

@@ -4,16 +4,16 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
-  --vt-c-black: #282828;
+  --vt-c-black-mute: #282828;
   --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #181818;
+  --vt-c-black: #181818;
 
   --vt-c-indigo: #2c3e50;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+  --vt-c-divider-dark-2: rgba(136, 136, 136, 0.48);
 
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
@@ -61,7 +61,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background-soft);
+  background: var(--color-background);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -86,6 +86,12 @@ body {
 }
 
 .container {
-  background-color: var(--color-background);
+  background-color: var(--color-background-soft);
   margin: auto;
+}
+
+input {
+  background-color: var(--color-background-mute);
+  outline: solid 1px var(--color-border);
+  color: var(--color-text);
 }

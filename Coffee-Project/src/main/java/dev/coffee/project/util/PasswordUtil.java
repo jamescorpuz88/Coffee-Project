@@ -1,4 +1,4 @@
-package dev.coffee.project.utils;
+package dev.coffee.project.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +10,11 @@ public class PasswordUtil {
         return passwordEncoder.encode(password);
     }
 
-    public static boolean verifyPassword(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
+    public static boolean validatePassword(String password, String hashedPassword) {
+        return passwordEncoder.matches(password, hashedPassword);
+    }
+
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= 8;
     }
 }

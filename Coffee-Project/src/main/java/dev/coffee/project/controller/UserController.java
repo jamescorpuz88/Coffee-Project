@@ -1,35 +1,31 @@
 package dev.coffee.project.controller;
 
-import dev.coffee.project.dao.UserDAO;
-import dev.coffee.project.model.User;
+import dev.coffee.project.entity.User;
+import dev.coffee.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
-    private final UserDAO userDAO;
+    private final UserService userService;
 
-    public UserController(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> userRegistration(@RequestBody User user) {
-        return userDAO.createUser(user);
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> userLogin(@RequestBody User user) {
-        return userDAO.userLogin(user);
-    }
-
-    @PostMapping("/delete")
-    public ResponseEntity<User> userDelete(@RequestBody User user) {
-        return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> loginUser(@RequestBody User user) {
+        return userService.loginUser(user);
     }
 }
