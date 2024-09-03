@@ -17,12 +17,13 @@ export default {
   methods: {
     async login() {
       await axios
-        .post('http://localhost:8080/api/v1/user/login', {
+        .post(`${import.meta.env.VITE_API_URL}/api/v1/user/login`, {
           username: this.username,
           password: this.password
         })
         .then((response) => {
           console.log(response.data)
+          alert('Login successful')
         })
         .catch((error) => {
           console.log(error)
@@ -50,7 +51,10 @@ export default {
           <input type="password" v-model="password" placeholder="Password" />
         </label>
         <button @click="login" type="button">Login</button>
-        <p>Dont have an account? Register</p>
+        <p>
+          Dont have an account?
+          <RouterLink to="/signup">Register</RouterLink>
+        </p>
       </form>
     </div>
   </div>
@@ -88,25 +92,6 @@ form {
     border: none;
 
     margin-bottom: 8px;
-  }
-
-  button {
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    margin-top: 32px;
-
-    font-weight: 600;
-    font-size: medium;
-    padding: 12px 0;
-    cursor: pointer;
-
-    background-color: rgb(89, 89, 228);
-    color: white;
-  }
-
-  button:hover {
-    background-color: rgb(71, 71, 185);
   }
 }
 </style>

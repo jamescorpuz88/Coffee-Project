@@ -6,11 +6,11 @@ export default {
   name: 'SignUp',
   components: {},
   setup() {
-    const firstName = ref('')
-    const lastName = ref('')
-    const username = ref('')
-    const password = ref('')
-    const email = ref('')
+    const firstName = ref('firstName')
+    const lastName = ref('lastName')
+    const username = ref('username')
+    const password = ref('password')
+    const email = ref('email@email.com')
 
     return {
       firstName,
@@ -63,13 +63,19 @@ export default {
       }
 
       await axios
-        .post('http://localhost:8080/api/v1/user/register', signUpData)
+        .post(`${import.meta.env.VITE_API_URL}/api/v1/user/register`, signUpData)
         .then((response) => {
-          console.log(response.data)
+          if (response.data.status) {
+            this.redirectToLogin()
+          }
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error.response.data)
         })
+    },
+
+    redirectToLogin() {
+      this.$router.push('/')
     }
   }
 }
@@ -164,25 +170,6 @@ form {
   p {
     font-size: 12px;
     font-weight: 500;
-  }
-
-  button {
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    margin-top: 32px;
-
-    font-weight: 600;
-    font-size: medium;
-    padding: 12px 0;
-    cursor: pointer;
-
-    background-color: rgb(89, 89, 228);
-    color: white;
-  }
-
-  button:hover {
-    background-color: rgb(71, 71, 185);
   }
 }
 </style>

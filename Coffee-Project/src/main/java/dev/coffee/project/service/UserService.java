@@ -1,5 +1,6 @@
 package dev.coffee.project.service;
 
+import dev.coffee.project.entity.ResponseMessage;
 import dev.coffee.project.entity.User;
 import dev.coffee.project.repository.UserRepository;
 import dev.coffee.project.util.PasswordUtil;
@@ -36,13 +37,17 @@ public class UserService {
         return ResponseEntity.ok("User logged in successfully");
     }
 
-    public ResponseEntity<String> saveUser(User user) {
-        if(!isValidEmail(user.getEmail())) {
-            return ResponseEntity.badRequest().body("Invalid email address");
+    public ResponseEntity<ResponseMessage> saveUser(User user) {
+        if(!isEmailValid(user.getEmail())) {
+            ResponseMessage responseMessage = new ResponseMessage("Invalid email address", "failed");
+
+            return ResponseEntity.badRequest().body(responseMessage);
         }
 
         if(!PasswordUtil.isPasswordValid(user.getPassword())) {
-            return ResponseEntity.badRequest().body("Password must be at least 8 characters long");
+            ResponseMessage responseMessage = new ResponseMessage("Password must be at least 8 characters long", "failed");
+
+            return ResponseEntity.badRequest().body(responseMessage);
         }
 
         // Validate fields via repository
@@ -51,11 +56,15 @@ public class UserService {
         if(!existingUsers.isEmpty()) {
             for(User existingUser : existingUsers) {
                 if(Objects.equals(existingUser.getEmail(), user.getEmail())) {
-                    return ResponseEntity.badRequest().body("Email is connected to an existing account");
+                    ResponseMessage responseMessage = new ResponseMessage("Email is already taken", "failed");
+
+                    return ResponseEntity.badRequest().body(responseMessage);
                 }
 
                 if(Objects.equals(existingUser.getUsername(), user.getUsername())) {
-                    return ResponseEntity.badRequest().body("Username is already taken");
+                    ResponseMessage responseMessage = new ResponseMessage("Username is already taken", "failed");
+
+                    return ResponseEntity.badRequest().body(responseMessage);
                 }
             }
         }
@@ -64,11 +73,11 @@ public class UserService {
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 //        userRepository.save(user);
 
-        return ResponseEntity.ok("User saved successfully");
+        return ResponseEntity.ok(new ResponseMessage("User registered successfully", "success"));
     }
 
     // Other utility methods
-    public static boolean isValidEmail(String email) {
+    public static boolean isEmailValid(String email) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
         Pattern pattern = Pattern.compile(EMAIL_REGEX);

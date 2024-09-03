@@ -1,5 +1,6 @@
 package dev.coffee.project.controller;
 
+import dev.coffee.project.entity.ResponseMessage;
 import dev.coffee.project.entity.User;
 import dev.coffee.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<ResponseMessage> registerUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 

@@ -23,9 +23,9 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
+  --color-background: var(--vt-c-white-mute);
   --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  --color-background-mute: var(--vt-c-white);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
@@ -36,7 +36,7 @@
   --section-gap: 160px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
@@ -94,4 +94,23 @@ input {
   background-color: var(--color-background-mute);
   outline: solid 1px var(--color-border);
   color: var(--color-text);
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  margin-top: 32px;
+
+  font-weight: 600;
+  font-size: medium;
+  padding: 12px 0;
+  cursor: pointer;
+
+  background-color: rgb(89, 89, 228);
+  color: white;
+}
+
+button:hover {
+  background-color: rgb(71, 71, 185);
 }
